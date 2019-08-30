@@ -1,16 +1,13 @@
-.App {
-  text-align: center;
-}
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
-.App-header {
+#background {
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  height: 100vh;
   color: white;
 }
 
@@ -22,3 +19,16 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#header {
+  /* display:flex; */
+  /* justify-content: space-between; */
+  align-content: center;
+  padding:1px;
+  font-weight: bold;
+  background-color: white;
+  color: black;
+}
+/* #header span:nth-child(1) {
+  
+} */
