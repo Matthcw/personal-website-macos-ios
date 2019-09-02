@@ -11,7 +11,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: 1200
+      width: 1200,
+      height:1200
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
@@ -85,23 +86,22 @@ class App extends Component {
             </div>
           </GridLayout>
 
-          {/* <div id="draggableArea">
+          <div id="draggableArea">
               <Draggable
                 axis="both"
                 handle=".handle"
-                defaultPosition={{ x: 0, y: 0 }}
+                defaultPosition={{ x: this.state.width/2, y: this.state.height/2 }}
                 position={null}
-                grid={[25, 25]}
                 scale={1}
                 onStart={this.handleStart}
                 onDrag={this.handleDrag}
                 onStop={this.handleStop}>
-                <div>
-                  <div className="handle">Drag from here</div>
-                  <div>This readme is really dragging on...</div>
+                <div className="aWindow">
+                  <div className="handle">X O --</div>
+                  <div>Some information about me</div>
                 </div>
               </Draggable>
-            </div> */}
+            </div>
         </div>
 
         <footer id="footer">
