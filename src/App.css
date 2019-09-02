@@ -47,7 +47,22 @@
 }
 
 #main-body {
-  align-self: baseline
+  align-self: baseline;
+  width:100%;
+  height:100%;
+}
+.layout {
+  height:100vh;
+}
+
+.layout div{
+  text-align: center
+}
+
+#draggableArea {
+  height:100vh;
+  width:100vw;
+  position: absolute;
 }
 
 #footer {
