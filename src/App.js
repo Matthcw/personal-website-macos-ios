@@ -12,7 +12,9 @@ class App extends Component {
     super(props);
     this.state = {
       width: 1200,
-      height:1200
+      height:1200,
+      center: null,
+      windows: []
     };
     this.updateDimensions = this.updateDimensions.bind(this);
   }
@@ -31,6 +33,8 @@ class App extends Component {
       height = w.innerHeight || documentElement.clientHeight || body.clientHeight;
     
     this.setState({ width: width, height: height });
+    this.setState({center: { x: width/2, y: height/2 }});
+    this.setState({center: null});
     // if you are using ES2015 I'm pretty sure you can do this: this.setState({width, height});
   }
   componentWillMount() {
@@ -60,6 +64,46 @@ class App extends Component {
 
 
   render() {
+    let aboutMeWindow = (<Draggable
+    key="aboutme"
+    axis="both"
+    handle=".handle"
+    defaultPosition={{ x: this.state.width/4, y: this.state.height/4 }}
+    position={this.state.center}
+    scale={1}
+    onStart={this.handleStart}
+    onDrag={this.handleDrag}
+    onStop={this.handleStop}>
+    <div className="aWindow">
+      <div className="handle"><span onClick={() => this.setState(prevState => ({windows: prevState.windows.filter((window) => window.name != "aboutme")}))}>X</span> O --</div>
+      <div>Some information about me</div>
+    </div>
+  </Draggable>)
+
+  let portfolioWindow = (<Draggable
+    key="portfolio"
+    axis="both"
+    handle=".handle"
+    defaultPosition={{ x: this.state.width/4, y: this.state.height/4 }}
+    position={this.state.center}
+    scale={1}
+    onStart={this.handleStart}
+    onDrag={this.handleDrag}
+    onStop={this.handleStop}>
+    <div className="aWindow">
+      <div className="handle"><span onClick={() => this.setState(prevState => ({windows: prevState.windows.filter((window) => window.name != "portfolio")}))}>X</span> O --</div>
+      <div>My cool portfolio</div>
+    </div>
+  </Draggable>)
+
+  let windowArray = this.state.windows.map((window) => {
+    if(window.name == "portfolio") {
+      return portfolioWindow;
+    } else if(window.name == "aboutme") {
+      return aboutMeWindow;
+    }
+  })
+
     return (
       <div id="background">
 
@@ -77,30 +121,17 @@ class App extends Component {
             width={this.state.width}
             verticalCompact={false}>
             <div key="b" data-grid={{ x: 0, y: 0, w: 1, h: 10 }}>
-              <img src={logo} className="App-logo" alt="logo" />
+              <img src={logo} className="App-logo" alt="logo" onClick={() => this.setState(prevState => ({windows: [...prevState.windows, {name:"portfolio"}]}))}/>
               <p>My Portfolio</p>
             </div>
-            <div key="c" data-grid={{ x: 4, y: 0, w: 1, h: 10 }}>
-              <img src={logo} className="App-logo" alt="logo" />
+            <div key="c" data-grid={{ x: 0, y: 4, w: 1, h: 10 }}>
+              <img src={logo} className="App-logo" alt="logo" onClick={() => this.setState(prevState => ({windows: [...prevState.windows, {name:"aboutme"}]}))}/>
               <p>About Me</p>
             </div>
           </GridLayout>
 
           <div id="draggableArea">
-              <Draggable
-                axis="both"
-                handle=".handle"
-                defaultPosition={{ x: this.state.width/2, y: this.state.height/2 }}
-                position={null}
-                scale={1}
-                onStart={this.handleStart}
-                onDrag={this.handleDrag}
-                onStop={this.handleStop}>
-                <div className="aWindow">
-                  <div className="handle">X O --</div>
-                  <div>Some information about me</div>
-                </div>
-              </Draggable>
+              {windowArray}
             </div>
         </div>
 
